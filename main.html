@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <title>Окна хаус</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet"  href="main.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <style>
+            *,
+            *::before,
+            *::after {
+              box-sizing: border-box;
+            }
+
+            .vkladki  {
+                width: 80%;
+                display: flex;
+                justify-content: center;
+            }
+
+            .vkldiv {
+                display: flex;
+                justify-content: space-around;
+                background-color: white;
+            }
+
+            .vkldiv img {
+                width: 100%;
+                height: 100%;
+            }
+
+            .vkltext {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-around;
+                margin: 20px;
+                text-align: left;
+                width: 50%;
+            }
+
+            .vkltext1 {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-around;
+                margin: 20px;
+                text-align: left;
+                width: 50%;
+                font-size: 13px;
+            }
+
+            .vkltext1 p {
+                margin-left: 100px;
+            }
+
+            .vkltext h2 {
+                color: #EF7F04;
+            }
+        
+            .tabs {
+              max-width: 80%;
+              margin: auto;
+              text-align: center;
+            }
+        
+            .tabs>input[type="radio"] {
+              display: none;
+            }
+        
+            .tabs>input[type="radio"]:checked+label {
+              background-color: #EF7F04;
+              color: white;
+            }
+        
+            .tabs>.vkl {
+              /* скрыть контент по умолчанию */
+              display: none;
+              border: none;
+              padding: 10px 15px;
+            }
+
+            .tabs1 {
+              max-width: 80%;
+              margin: auto;
+              text-align: center;
+            }
+        
+            .tabs1>input[type="radio"] {
+              display: none;
+            }
+        
+            .tabs1>input[type="radio"]:checked+label {
+              background-color: #EF7F04;
+              color: white;
+            }
+        
+            .tabs1>.vkl {
+              /* скрыть контент по умолчанию */
+              display: none;
+              border: none;
+              padding: 10px 15px;
+            }
+        
+            /* отобразить контент, связанный с вабранной радиокнопкой (input type="radio") */
+            #tab-btn-1:checked~#content-1,
+            #tab-btn-2:checked~#content-2,
+            #tab-btn-3:checked~#content-3,
+            #tab-btn-4:checked~#content-4 {
+              display: block;
+            }
+
+            #tab-btn-11:checked~#content-11,
+            #tab-btn-21:checked~#content-21,
+            #tab-btn-31:checked~#content-31,
+            #tab-btn-41:checked~#content-41 {
+              display: block;
+            }
+        
+            .tabs>label {
+              display: inline-block;
+              text-align: center;
+              vertical-align: middle;
+              user-select: none;
+              background: none;
+              font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+              color: #2F2F51;
+              border: 1px solid transparent;
+              padding: 5px 11px;
+              font-size: 16px;
+              line-height: 1.5;
+              border-radius: 4px;
+              transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+              margin-left: 6px;
+              cursor: pointer;
+              margin-bottom: 10px;
+            }
+        
+            .tabs>label:first-of-type {
+              margin-left: 0;
+            }
+
+            .tabs1>label {
+              display: inline-block;
+              text-align: center;
+              vertical-align: middle;
+              user-select: none;
+              background: none;
+              font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+              color: #2F2F51;
+              border: 1px solid transparent;
+              padding: 5px 11px;
+              font-size: 16px;
+              line-height: 1.5;
+              border-radius: 4px;
+              transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+              margin-left: 6px;
+              cursor: pointer;
+              margin-bottom: 10px;
+            }
+        
+            .tabs1>label:first-of-type {
+              margin-left: 0;
+            }
+          </style>
+          <style>
+            .resize a:nth-child(1) {font-size: 10px;}
+            .resize a:nth-child(2) {font-size: 13px;}
+            .resize a:nth-child(3) {font-size: 18px;}
+            </style>
+            <style>
+#butterfly {
+  position: relative;
+  width: 350px;
+  height: 312px;
+  -webkit-transform: rotate3d(0, 1, 0, 0deg) scale3d(0.5, 0.5, 0.5);
+  -ms-transform: rotate3d(0, 1, 0, 0deg) scale3d(0.5, 0.5, 0.5);
+  transform: rotate3d(0, 1, 0, 0deg) scale3d(0.5, 0.5, 0.5);
+  -webkit-transform-origin: 100% 0%;
+  -ms-transform-origin: 100% 0%;
+  transform-origin: 100% 0%;
+  -webkit-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-animation: butterfly 5s linear infinite;
+  animation: butterfly 5s linear infinite;
+}
+#leftwing {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 200px;
+  height: 312px;
+  background-image: url(https://html5book.ru/wp-content/uploads/2015/06/butterfly.png);
+  background-repeat: no-repeat;
+  -webkit-transform: rotateX(90deg) rotate3d(0, 1, 0, 0deg);
+  -ms-transform: rotateX(90deg) rotate3d(0, 1, 0, 0deg);
+  transform: rotateX(90deg) rotate3d(0, 1, 0, 0deg);
+  -webkit-transform-origin: inherit;
+  -ms-transform-origin: inherit;
+  transform-origin: inherit;
+  -webkit-animation: leftwing 0.2s linear infinite;
+  animation: leftwing 0.2s linear infinite;
+}
+#rightwing {
+  position: absolute;
+  left: 175px;
+  top: 0px;
+  width: 200px;
+  height: 312px;
+  background-image: url(https://html5book.ru/wp-content/uploads/2015/06/butterfly.png);
+  background-repeat: no-repeat;
+  -webkit-transform: rotateX(90deg) translate3d(-178px, 0, 0) rotate3d(0, 1, 0, 180deg);
+  -ms-transform: rotateX(90deg) translate3d(-178px, 0, 0) rotate3d(0, 1, 0, 180deg);
+  transform: rotateX(90deg) translate3d(-178px, 0, 0) rotate3d(0, 1, 0, 180deg);
+  -webkit-transform-origin: inherit;
+  -ms-transform-origin: inherit;
+  transform-origin: inherit;
+  -webkit-animation: rightwing 0.2s linear infinite;
+  animation: rightwing 0.2s linear infinite;
+}
+@-webkit-keyframes butterfly {
+  from {
+    -webkit-transform: rotate3d(0, 1, 0, 0deg) scale3d(0.5, 0.5, 0.5) translate3d(-150px, 300px, 0);
+  }
+  25% {
+    -webkit-transform: rotate3d(0, 1, 0, -90deg) scale3d(0.5, 0.5, 0.5) translate3d(-150px, 300px, 0);
+  }
+  50% {
+    -webkit-transform: rotate3d(0, 1, 0, -180deg) scale3d(0.5, 0.5, 0.5) translate3d(-150px, 300px, 0);
+  }
+  75% {
+    -webkit-transform: rotate3d(0, 1, 0, -270deg) scale3d(0.5, 0.5, 0.5) translate3d(-150px, 300px, 0);
+  }
+  to {
+    -webkit-transform: rotate3d(0, 1, 0, -360deg) scale3d(0.5, 0.5, 0.5) translate3d(-150px, 300px, 0);
+  }
+}
+@keyframes butterfly {
+  from {
+    transform: rotate3d(0, 1, 0, 0deg) scale3d(0.5, 0.5, 0.5) translate3d(-150px, 300px, 0);
+  }
+  25% {
+    transform: rotate3d(0, 1, 0, -90deg) scale3d(0.5, 0.5, 0.5) translate3d(-150px, 300px, 0);
+  }
+  50% {
+    transform: rotate3d(0, 1, 0, -180deg) scale3d(0.5, 0.5, 0.5) translate3d(-150px, 300px, 0);
+  }
+  75% {
+    transform: rotate3d(0, 1, 0, -270deg) scale3d(0.5, 0.5, 0.5) translate3d(-150px, 300px, 0);
+  }
+  to {
+    transform: rotate3d(0, 1, 0, -360deg) scale3d(0.5, 0.5, 0.5) translate3d(-150px, 300px, 0);
+  }
+}
+@-webkit-keyframes rightwing {
+  from {
+    -webkit-transform: rotateX(90deg) translate3d(-178px, 0, 0) rotate3d(0, 1, 0, 180deg);
+  }
+  50% {
+    -webkit-transform: rotateX(90deg) translate3d(-178px, 0, 0) rotate3d(0, 1, 0, 100deg);
+  }
+  to {
+    -webkit-transform: rotateX(90deg) translate3d(-178px, 0, 0) rotate3d(0, 1, 0, 180deg);
+  }
+}
+@keyframes rightwing {
+  from {
+    transform: rotateX(90deg) translate3d(-178px, 0, 0) rotate3d(0, 1, 0, 180deg);
+  }
+  50% {
+    transform: rotateX(90deg) translate3d(-178px, 0, 0) rotate3d(0, 1, 0, 100deg);
+  }
+  to {
+    transform: rotateX(90deg) translate3d(-178px, 0, 0) rotate3d(0, 1, 0, 180deg);
+  }
+}
+@-webkit-keyframes leftwing {
+  from {
+    -webkit-transform: rotateX(90deg) rotate3d(0, 1, 0, 0deg);
+  }
+  50% {
+    -webkit-transform: rotateX(90deg) rotate3d(0, 1, 0, 80deg);
+  }
+  to {
+    -webkit-transform: rotateX(90deg) rotate3d(0, 1, 0, 0deg);
+  }
+}
+@keyframes leftwing {
+  from {
+    transform: rotateX(90deg) rotate3d(0, 1, 0, 0deg);
+  }
+  50% {
+    transform: rotateX(90deg) rotate3d(0, 1, 0, 80deg);
+  }
+  to {
+    transform: rotateX(90deg) rotate3d(0, 1, 0, 00deg);
+  }
+}
+</style>
+    </head>
+    <body class="wrapper">
+            <header>
+                <div class="buttons">
+                    <div><a href="#"><img src="img/logotip/logo.png" alt="main"></a></div>
+                    <div>
+                        <ul>
+                            <li><div class="dropdown">
+                                <button onclick="myFunction()" class="dropbtn">Услуги</button>
+                                <div id="myDropdown" class="dropdown-content">
+                                <a href="#">Link 1</a>
+                                <a href="#">Link 2</a>
+                                <a href="#">Link 3</a>
+                                </div>
+                                </div></li>
+                            <li><a href="#">Продукция</a></li>
+                            <li><a href="#">О компании</a></li>
+                            <li><a href="#">Портфолио</a></li>
+                            <li><a href="#">Вопрос-ответ</a></li>
+                            <li><a href="#">Контакты</a></li>
+                        </ul>
+                    </div>
+                    <div class="bt">
+                        <button class="bt1"><img src="img/button/img1.png" alt="main">Заявка на размер</button>
+                        <button class="bt2"><img src="img/button/img2.png" alt="main">Заказать расчет</button>
+                        
+                    </div>
+                    <div class="burger" onclick="Burger(this)">
+                        <div class="open" onclick="closeNav()"></div>
+                        <div class="close" onclick="openNav()"></div>
+                            <div class="bar1"></div>
+                            <div class="bar2"></div>
+                            <div class="bar3"></div>
+                        </div>
+                </div>
+
+            </header>
+
+            <section class="headbot">
+                <div id="butterfly">
+                    <div id="leftwing"></div>
+                    <div id="rightwing"></div>
+                    </div>
+                <div id="mySidenav" class="sidenav">
+                    <a href="#">Услуги</a>
+                    <a href="#">Продукция</a>
+                    <a href="#">О компании</a>
+                    <a href="#">Портфолио</a>
+                    <a href="#">Вопрос-ответ</a>
+                    <a href="#">Контакты</a>
+                    </div>
+                <div class="headbot1">
+                    <div>
+                        <h1><t>Окна Хаус -</t> <br> Профессиональный подход к остеклению</h1>
+                    </div>
+                    <div class="headbot2">
+                        <div class="block">
+                            <div><img src="img/banner/h1.png" alt="main"></div>
+                            <p>Современные окна и балконные конструкции по доступным ценам</p>
+                        </div>
+                        <div class="block">
+                            <div><img src="img/banner/h2.png" alt="main"></div>
+                            <p>Квалифицированный подход к решению задач любой сложности</p>
+                        </div>
+                        <div class="block">
+                            <div><img src="img/banner/h3.png" alt="main"></div>
+                            <p>Гарантия высочайшего качества нашей продукции</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="headbotform">
+                    <form>
+                        <h3>Вызвать замерщика на дом</h3>
+                        <input type="text" class="headforminput" placeholder="Представтесь пожалуйста">
+                        <input type="text" class="headforminput" placeholder="Номер телефона">
+                        <input type="text" class="headforminput" placeholder="E-mail">
+                        <div>
+                            <input type="checkbox" class="formcheck">
+                            <p>Согласен на обработку персональных данных в соответствии с <a href="#">политикой конфиденциальности</a></p>
+                        </div>
+                        <button class="bt1">Отправить заявку</button>
+                    </form>
+                </div>
+            </section>
+
+            <div class="content">
+                <div class="heading">
+                    <h3>Наши услуги</h3>
+                </div>
+
+                <div class="usl">
+                    <div class="usl1">
+                        <div class="usluga1">
+                            <div class="usltext">
+                                <div class="nameusl">
+                                    <div><img src="img/yslyga/uslim1.png" alt="main"></div>
+                                    <h3>Установка пластиковых окон</h3>
+                                </div>
+                                <p>Устанавливаем пластиковые окна Rehau от проверенного производителя с гарантией качества</p>
+                            </div>
+                            <div class="uslstr">
+                                
+                            </div>
+                        </div>
+                        <div class="usluga2">
+                            <div class="usltext">
+                                <div class="nameusl">
+                                    <div><img src="img/yslyga/uslim2.png" alt="main"></div>
+                                    <h3>Остекление балконов и лоджи</h3>
+                                </div>
+                                <p>Занимаемся остеклением и отделкой балконов и лоджий. Теплое и холодное остекление, изготовление выносов и крыш. Беремся за сложные объекты</p>
+                            </div>
+                            <div class="uslstr">
+                                
+                            </div>
+                        </div>
+                        <div class="usluga3">
+                            <div class="usltext">
+                                <div class="nameusl">
+                                    <div><img src="img/yslyga/uslim3.png" alt="main"></div>
+                                    <h3>Остекление коттеджей и дач</h3>
+                                </div>
+                                <p>Остекление и отделка под ключ: от коттеджей и дач до террас и беседок. Выделяем личного технолога под каждый объект</p>
+                            </div>
+                            <div class="uslstr">
+
+                            </div>
+                        </div>
+                        <div class="usluga4">
+                            <div class="usltext">
+                                <div class="nameusl">
+                                    <div><img src="img/yslyga/uslim4.png" alt="main"></div>
+                                    <h3>Остекление корпоративных объектов</h3>
+                                </div>
+                                <p>Реализуем сложные проекты по остеклению торговых центров, ресторанов, производственных помещений и офисов</p>
+                            </div>
+                            <div class="uslstr">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="heading">
+                    <h3>Продукция</h3>
+                </div>
+
+                <div class="tabs">
+   
+                    <!--  Контейнер с вкладками   -->
+                    <ul class="tab-header">
+                       <li class="tab-header__item js-tab-trigger active" data-tab="1">Стандарт</li>
+                       <li class="tab-header__item js-tab-trigger" data-tab="2">Бизнес</li>
+                       <li class="tab-header__item js-tab-trigger" data-tab="3">Премиум</li>
+                       <li class="tab-header__item js-tab-trigger" data-tab="4">Эксклюзив</li>
+                    </ul>
+                    
+                    <!--  Контейнер с блоками, которые содержат контент вкладок   -->
+                    <ul class="tab-content">
+                       <li class="tab-content__item js-tab-content active" data-tab="1">
+                        <div class="info">
+                        <div><img src="img/production/vkl.png" alt="main"></div>
+                        <div class="vkltext">
+                            <h2>Rehau Blitz New</h2>
+                            <p>Сохраняют тепло в доме, защищают от шума и вписываются в любой интерьер. Практичный выбор</p>
+                            <p>Системная глубина...............................................60/60 мм<br>
+                            Ширина стеклопакета.........................................24/31 мм<br>
+                            Воздушные камеры..............................................3<br>
+                            Теплосопротивление...........................................0,70 м2С/ВТ
+                            </p>
+                        </div>
+                        </div>
+                       </li>
+                       <li class="tab-content__item js-tab-content" data-tab="2">
+                        <div class="info">
+                            <div><img src="img/production/vkl.png" alt="main"></div>
+                            <div class="vkltext">
+                                <h2>Rehau Blitz New</h2>
+                                <p>Сохраняют тепло в доме, защищают от шума и вписываются в любой интерьер. Практичный выбор</p>
+                                <p>Системная глубина...............................................60/60 мм<br>
+                                Ширина стеклопакета.........................................24/31 мм<br>
+                                Воздушные камеры..............................................3<br>
+                                Теплосопротивление...........................................0,70 м2С/ВТ
+                                </p>
+                            </div>
+                        </div>
+                       </li>
+                       <li class="tab-content__item js-tab-content" data-tab="3">
+                        <div class="info">
+                            <div><img src="img/production/vkl.png" alt="main"></div>
+                            <div class="vkltext">
+                                <h2>Rehau Blitz 1</h2>
+                                <p>Сохраняют тепло в доме, защищают от шума и вписываются в любой интерьер. Практичный выбор</p>
+                                <p>Системная глубина...............................................60/60 мм<br>
+                                Ширина стеклопакета.........................................24/31 мм<br>
+                                Воздушные камеры..............................................3<br>
+                                Теплосопротивление...........................................0,70 м2С/ВТ
+                                </p>
+                            </div>
+                        </div>
+                       </li>
+                       <li class="tab-content__item js-tab-content" data-tab="4">
+                        <div class="info">
+                            <div><img src="img/production/vkl.png" alt="main"></div>
+                            <div class="vkltext">
+                                <h2>Rehau Blitz New 2</h2>
+                                <p>Сохраняют тепло в доме, защищают от шума и вписываются в любой интерьер. Практичный выбор</p>
+                                <p>Системная глубина...............................................60/60 мм<br>
+                                Ширина стеклопакета.........................................24/31 мм<br>
+                                Воздушные камеры..............................................3<br>
+                                Теплосопротивление...........................................0,70 м2С/ВТ
+                                </p>
+                            </div>
+                        </div>
+                     </li>
+                    </ul>
+                 </div>
+
+                <div class="standarts">
+                    <div class="stands">
+                        <div><img src="img/standart/stand.png" alt="main"></div>
+                        <div class="stands1">
+                            <div class="stand">
+                                <div><img src="img/standart/stand1.png" alt="main"></div>
+                                <p>Сертифицированный производитель Rehau</p>
+                            </div>
+                            <div class="stand">
+                                <div><img src="img/standart/stand2.png" alt="main"></div>
+                                <p>Инновационный оконный завод</p>
+                            </div>
+                            <div class="stand">
+                                <div><img src="img/standart/stand3.png" alt="main"></div>
+                                <p>Лидер по переработке профилей Rehau в России</p>
+                            </div>
+                            <div class="stand">
+                                <div><img src="img/standart/stand5.png" alt="main"></div>
+                                <p>Высокотехнологичное автоматизированное оборудование</p>
+                            </div>
+                            <div class="stand">
+                                <div><img src="img/standart/stand6.png" alt="main"></div>
+                                <p>Широкий ассортимент продукции</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <button class="bt2"><img src="img/button/img2.png" alt="main">Заказать расчет</button>
+                </div>
+
+                <div class="heading">
+                    <h3>О компании</h3>
+                </div>
+
+                <div class="vkladki">
+                    <div class="tabs1">
+                        <input type="radio" name="tab-btn1" id="tab-btn-11" value="" checked>
+                        <label for="tab-btn-11">Описание</label>
+                        <input type="radio" name="tab-btn1" id="tab-btn-21" value="">
+                        <label for="tab-btn-21">Как мы работаем</label>
+                        <input type="radio" name="tab-btn1" id="tab-btn-31" value="">
+                        <label for="tab-btn-31">Отзывы</label>
+                        <input type="radio" name="tab-btn1" id="tab-btn-41" value="">
+                        <label for="tab-btn-41">Сертификаты</label>
+                    
+                        <div class="vkl" id="content-11">
+                            <div class="vkldiv">
+                                <div class="vkltext1">
+                                    <div><img src="img/logotip/logo.png" alt="main"></div>
+                                    <p>Мы помогаем клиентам подбирать решения, учитывая пожежелания к характеристикам окна и его стоимости. Окно - это объект, которым Вы будете пользоваться много лет, поэтому для нас очень важно, чтобы Вы сделали правильный выбор.</p>
+                                </div>
+                                <div><img src="img/production/vkl1.png" alt="main"></div>
+                            </div>
+                        </div>
+                        <div class="vkl" id="content-21">
+                            <div class="vkldiv">
+                                <div class="vkltext1">
+                                    <div><img src="img/logotip/logo.png" alt="main"></div>
+                                    <p>Мы помогаем клиентам подбирать решения, учитывая пожежелания к характеристикам окна и его стоимости. Окно - это объект, которым Вы будете пользоваться много лет, поэтому для нас очень важно, чтобы Вы сделали правильный выбор.</p>
+                                </div>
+                                <div><img src="img/production/vkl1.png" alt="main"></div>
+                            </div>
+                        </div>
+                        <div class="vkl" id="content-31">
+                            <div class="vkldiv">
+                                <div class="vkltext1">
+                                    <div><img src="img/logotip/logo.png" alt="main"></div>
+                                    <p>Мы помогаем клиентам подбирать решения, учитывая пожежелания к характеристикам окна и его стоимости. Окно - это объект, которым Вы будете пользоваться много лет, поэтому для нас очень важно, чтобы Вы сделали правильный выбор.</p>
+                                </div>
+                                <div><img src="img/production/vkl1.png" alt="main"></div>
+                            </div>
+                        </div>
+                        <div class="vkl" id="content-41">
+                            <div class="vkldiv">
+                                <div class="vkltext1">
+                                    <div><img src="img/logotip/logo.png" alt="main"></div>
+                                    <p>Мы помогаем клиентам подбирать решения, учитывая пожежелания к характеристикам окна и его стоимости. Окно - это объект, которым Вы будете пользоваться много лет, поэтому для нас очень важно, чтобы Вы сделали правильный выбор.</p>
+                                </div>
+                                <div><img src="img/production/vkl1.png" alt="main"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="parametrs">
+                    <div class="params">
+                        <div class="param">
+                            <div><img src="img/parametrs/op1.png" alt="main"></div>
+                            <div>
+                                <h4>ПРОФЕССИОНАЛИЗМ</h4>
+                                <p>Бригада профессиональных мастеров по монтажу и обслуживанию</p>
+                            </div>
+                        </div>
+                        <div class="param">
+                            <div><img src="img/parametrs/op2.png" alt="main"></div>
+                            <div>
+                                <h4>ЦЕНООБРАЗОВАНИЕ</h4>
+                                <p>Лучшие цены на рынке пластиковых окон</p>
+                            </div>
+                        </div>
+                        <div class="param">
+                            <div><img src="img/parametrs/op3.png" alt="main"></div>
+                            <div>
+                                <h4>МОБИЛЬНОСТЬ</h4>
+                                <p>Заключение договора на дому</p>
+                            </div>
+                        </div>
+                        <div class="param">
+                            <div><img src="img/parametrs/op4.png" alt="main"></div>
+                            <div>
+                                <h4>ЛОЯЛЬНОСТЬ</h4>
+                                <p>99% клиентов рекомендуют нас своим друзьям</p>
+                            </div>
+                        </div>
+                        <div class="param">
+                            <div><img src="img/parametrs/op5.png" alt="main"></div>
+                            <div>
+                                <h4>СКОРОСТЬ</h4>
+                                <p>Короткие сроки установки изделий</p>
+                            </div>
+                        </div>
+                        <div class="param">
+                            <div><img src="img/parametrs/op6.png" alt="main"></div>
+                            <div>
+                                <h4>СЛУЖБА КАЧЕСТВА</h4>
+                                <p>Безупречное качество и контроль изделий ПВХ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <button class="bt11"><img src="img/button/img1.png" alt="main">Оформить заявку на размер</button>
+                </div>
+
+                <div class="fotomap">
+                    <div class="slider">
+                        <div>
+                            <h3>Портфолио</h3>
+                        </div>
+                        <div id="carousel" class="carousel">
+                            <button class="arrow prev">⇦</button>
+                            <div class="gallery">
+                              <ul>
+                                <li><img src="img/galerry/sl1.png" alt="main"></li>
+                                <li><img src="img/galerry/sl2.png" alt="main"></li>
+                                <li><img src="img/galerry/sl3.png" alt="main"></li>
+                                <li><img src="img/galerry/sl1.png" alt="main"></li>
+                                <li><img src="img/galerry/sl2.png" alt="main"></li>
+                                <li><img src="img/galerry/sl3.png" alt="main"></li>
+                                <li><img src="img/galerry/sl1.png" alt="main"></li>
+                                <li><img src="img/galerry/sl2.png" alt="main"></li>
+                                <li><img src="img/galerry/sl3.png" alt="main"></li>
+                              </ul>
+                            </div>
+                            <button class="arrow next">⇨</button>
+                          </div>
+                    </div>
+                    <div class="map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2221.828375839446!2d23.828483418444083!3d53.66785598381069!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46e0787fc12fca93%3A0x67f751398e60de7a!2z0JPRgNC-0LTQvdC10L3RgdC60LjQuSDQs9C-0YHRg9C00LDRgNGB0YLQstC10L3QvdGL0Lkg0L_QvtC70LjRgtC10YXQvdC40YfQtdGB0LrQuNC5INC60L7Qu9C70LXQtNC2!5e0!3m2!1sru!2sby!4v1655195596807!5m2!1sru!2sby" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+
+                <div class="questions">
+                    <div class="que">
+                        <h3>Вопрос-ответ</h3>
+                        <div class="q">
+                            <input class="hide" id="hd-1" type="checkbox" >
+                            <label for="hd-1">Сколько по времени занимает изготовление пластиковых окон?</label>
+                            <div>Скрытое содержание......</div>
+                        </div>
+                        <div class="q">
+                            <input class="hide" id="hd-2" type="checkbox" >
+                            <label for="hd-2">Какие существуют способы оплаты?</label>
+                            <div>Скрытое содержание...</div>
+                        </div>
+                        <div class="q">
+                            <input class="hide" id="hd-3" type="checkbox" >
+                            <label for="hd-3">Где я могу посмотреть образцы?</label>
+                            <div>Скрытое содержание...</div>
+                        </div>
+                        <div class="q">
+                            <input class="hide" id="hd-4" type="checkbox" >
+                            <label for="hd-4">Зачем вызывать замерщика? Я могу дать размеры</label>
+                            <div>Скрытое содержание...</div>
+                        </div>
+                        <div class="q">
+                            <input class="hide" id="hd-5" type="checkbox" >
+                            <label for="hd-5">Хотелось бы отделать балкон. Поможете?</label>
+                            <div>Скрытое содержание...</div>
+                        </div>
+                        <div class="q">
+                            <input class="hide" id="hd-6" type="checkbox" >
+                            <label for="hd-6">Мне надо нанимать грузчиков для подъема?</label>
+                            <div>Нет, команда мастеров все сами аккуратно доставят и внесут.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="heading">
+                    <h3>Контакты</h3>
+                </div>
+
+                <div class="contacts">
+                    <div class="contact">
+                        <div class="contacttext">
+                            <h4>Бесплатная консультация</h4>
+                            <div class="numbers">
+                                <div><img src="img/footer/phone.png" alt="main"></div>
+                                <h3>8 (4932) 34 - 31 - 40</h3>
+                                <h3>8 (905) 109 - 31 - 40</h3>
+                            </div>
+                            <div class="numbers">
+                                <div><img src="img/footer/map.png" alt="main"></div>
+                                <p>г. Иваново, ул. Генерала Хлебникова, д.54, оф.303</p>
+                            </div>
+                            <div class="numbers">
+                                <div><img src="img/footer/mail.png" alt="main"></div>
+                                <p>okna@haus.ru</p>
+                            </div>
+                            <div class="numbers">
+                                <p class="contp">Установку должны выполнять только эксперты. Нам доверяют сотни семей. Узнайте поробнее, какие решения вам подходят. Вы можете приобрести недорогие товары при гарантированно высоком качестве.</p>
+                                <div class="contimg"><img src="img/footer/rabotnik.png" alt="main"></div>
+                            </div>
+                        </div>
+                        <div class="headbotform">
+                            <form name="loginform" onSubmit="return validateForm();" action="D:\ПСIП\ПРАКТИКА ПСИП\main.html" method="post">
+                                <h3>Вызвать замерщика на дом</h3>
+                                <input type="text" name="names" class="headforminput names" placeholder="Ваше имя">
+                                <input type="text" class="headforminput emails" name="emails" placeholder="E-mail">
+                                <input type="text" class="headforminput soobch" name="soobch" placeholder="Ваше собщение">
+                                <div>
+                                    <input type="checkbox" class="formcheck">
+                                    <p>Я согласен(на) на обработку персональных данных></p>
+                                </div>
+                                <input type="submit" class="bt1" value="Отправить сообщение">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    <div class="subfooter">
+                        <div class="foot1">
+                            <div><a href="main.html"><img src="img/logotip/logo1.png" alt="main"></a></div>
+                            <p>© ООО “Окна Хаус”, 2011 - 2022</p>
+                        </div>
+                        <div class="foot2">
+                            <a href="#">Политика конфиденциальности</a>
+                            <a href="#">Пользовательское соглашение</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script src="scolup.js"></script>
+            <a href="#" class="scrollup">Наверх</a>
+            <script src="js/scolup.js"></script>
+            <script src="js/myfunc.js"></script>
+            <script src="js/popup.js"></script>
+            <script src="js/validaction.js"></script>
+            <script src="js/min.js"></script>
+            <script src="js/burger.js"></script>
+            <!--<script src="js/shrift.js"></script>-->
+            <script src="js/kar.js"></script>
+            <p class="resize">
+                <a href="#" onclick="return resize(-1)">A</a>
+                <a href="#" onclick="return resize(0)">A</a>
+                <a href="#" onclick="return resize(+1)">A</a>
+            </p>
+            <div class="popup-window">
+                <p class="close">x</p>	
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/fK70h0CXNsU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+    </body>
+</html>
